@@ -237,7 +237,7 @@ fi
 
 #create user's dektop symlink to common shared area
 		[ -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" #force delete if exists
-		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE03/$VAR_MACSHARED" "/Users/$VAR_USERNAME/Desktop/Mac Shared" #create symlink
+		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE03/Mac-Shared" "/Users/$VAR_USERNAME/Desktop/Mac Shared" #create symlink
 
 
 _mainLog "inf" "$VAR_NAME finished"
