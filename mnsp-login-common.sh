@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.4" #script version used for update checking
+CNF_VER="0.9.5" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -10,8 +10,11 @@ CNF_AUTOSTART="NO" #run login items script
 CNF_HDRIVE="NO" #enable/disable network/windows Home (N) drive mounts
 CNF_SLINK="NO" #enable/didable symlinks to desktop
 CNF_FIXES="YES" #enable/disable special mac fixes...'
-CNF_GITSRC="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.sh" #self updating git source - needs migration to MNSP GIT instance
-CNF_GITSHA="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.checksum" #self updating checksum - needs migration to MNSP GIT instance
+#CNF_GITSRC="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.sh" #self updating git source - needs migration to MNSP GIT instance
+#CNF_GITSHA="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.checksum" #self updating checksum - needs migration to MNSP GIT instance
+CNF_GITSRC="https://raw.githubusercontent.com/mnsp-master/apple-mac/main/mnsp-login-common.sh" #self updating git source - MNSP GIT instance
+CNF_GITSHA="https://raw.githubusercontent.com/mnsp-master/apple-mac/main/mnsp-login-common.checksum" #self updating checksum - MNSP GIT instance
+
 CNF_DELKEYCHAINS="YES" #enable/disable force deletion of users keychains, prevents gen new keychain messages/confusion.
 CNF_SETUP="/private/mnsp" #local location for all scripts and assets
 CNF_SWTAR="11.5.1" #macos target version
