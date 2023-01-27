@@ -244,10 +244,3 @@ fi
 _mainLog "inf" "$VAR_NAME finished"
 _mainLog "def" "************************************************************"
 
-########
-#CNF_SERVER="wrisch-macserver01.writhlington.internal" #address of server hosting resources  # - legacy writhlington only
-#CNF_STAHOME="wri-sr-004" # - legacy writhlington only
-#CNF_STUHOME="wri-sr-003" # - legacy writhlington only
-#CNF_SETUP="/Writhlington" #local location for all scripts and assets  # - legacy writhlington only
-#curl --url "http://$CNF_SERVER/MNSP/scripts/wrisch-login.sh" --output "$CNF_SETUP/.scripts/wrisch-login.sh" > /dev/null # - legacy writhlington only
-#VAR_USERBACKUP="CNF_SETUP/.backups/$VAR_USERNAME" #users backup directory # - legacy writhlington only
