@@ -23,6 +23,7 @@ CNF_LOGNAME="login" #name for this scripts log file
 #agreed MAT common smbshare name(s)
 CNF_SMBSHARE01="MacData01" #students data
 CNF_SMBSHARE02="MacData02" #staff data
+CNF_SMBSHARE03="MacData03" #Common Shared area
 
 # Script Variables
 VAR_NAME=$(basename $0) #script name
@@ -169,13 +170,19 @@ if [ "$CNF_AUTOSTART" == "YES" ]; then #autostart applications after login as us
 	fi
 fi
 
-#mount NAS drive
+#mount NAS drive - student data share
 CNF_MyMediaWork="smb://$CNF_NAS/$CNF_SMBSHARE01"
 #sudo -u "$VAR_USERNAME" osascript -e 'mount volume "smb://mnsp-syno-01/MacData01"'
 
 	_mainLog "inf" "Mounting NAS SMB share: $CNF_MyMediaWork"
 
 sudo -u "$VAR_USERNAME" osascript -e "mount volume \"${CNF_MyMediaWork}\""
+
+#mount NAS drive - Common data share
+CNF_MacShared="smb://$CNF_NAS/$CNF_SMBSHARE03"
+	_mainLog "inf" "Mounting NAS SMB share: $CNF_MacShared"
+sudo -u "$VAR_USERNAME" osascript -e "mount volume \"${CNF_MacShared}\""
+
 
 #check if logging in user is staff or student
 VAR_ROLE=$(dscl "/Active Directory/$CNF_ADNETBIOSNAME/All Domains" -read "Users/$VAR_USERNAME" distinguishedName)
@@ -227,6 +234,10 @@ elif [[ "${VAR_ROLE}" =~ "Staff" ]] ;then
 		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE02/$VAR_STAFFROLE/$VAR_USERNAME" "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink using extracted vars from DSCL/LDAP lookup
 
 fi
+
+#create user's dektop symlink to common shared area
+		[ -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" #force delete if exists
+		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE03/$VAR_MACSHARED" "/Users/$VAR_USERNAME/Desktop/Mac Shared" #create symlink
 
 
 _mainLog "inf" "$VAR_NAME finished"
