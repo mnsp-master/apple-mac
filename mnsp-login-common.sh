@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.6" #script version used for update checking
+CNF_VER="0.9.7" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -10,8 +10,6 @@ CNF_AUTOSTART="NO" #run login items script
 CNF_HDRIVE="NO" #enable/disable network/windows Home (N) drive mounts
 CNF_SLINK="NO" #enable/didable symlinks to desktop
 CNF_FIXES="YES" #enable/disable special mac fixes...'
-##CNF_GITSRC="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.sh" #self updating git source - needs migration to MNSP GIT instance
-##CNF_GITSHA="https://raw.githubusercontent.com/writhlingtonschool-snoble/OSX-LoginScript/main/mnsp-login-common.checksum" #self updating checksum - needs migration to MNSP GIT instance
 CNF_GITSRC="https://raw.githubusercontent.com/mnsp-master/apple-mac/main/mnsp-login-common.sh" #self updating git source - MNSP GIT instance
 CNF_GITSHA="https://raw.githubusercontent.com/mnsp-master/apple-mac/main/mnsp-login-common.checksum" #self updating checksum - MNSP GIT instance
 
@@ -24,6 +22,7 @@ CNF_LOGNAME="login" #name for this scripts log file
 CNF_SMBSHARE01="MacData01" #students data
 CNF_SMBSHARE02="MacData02" #staff data
 CNF_SMBSHARE03="MacData03" #Common Shared area
+CNF_MACSHARED_NAME="Mac-Shared" #shared area folder name
 
 # Script Variables
 VAR_NAME=$(basename $0) #script name
@@ -237,8 +236,8 @@ fi
 
 #create user's dektop symlink to common shared area
 		[ -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Shared" #force delete if exists
-		_mainLog "inf" "Symlink content: /Volumes/$CNF_SMBSHARE03/Mac-Shared /Users/$VAR_USERNAME/Desktop/Mac Shared" #content of symlink
-		#sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE03/Mac-Shared" "/Users/$VAR_USERNAME/Desktop/Mac Shared" #create symlink
+		_mainLog "inf" "Symlink content: /Volumes/$CNF_SMBSHARE03/$CNF_MACSHARED_NAME /Users/$VAR_USERNAME/Desktop/Mac Shared" #content of symlink
+		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE03/$CNF_MACSHARED_NAME" "/Users/$VAR_USERNAME/Desktop/Mac Shared" #create symlink
 
 
 _mainLog "inf" "$VAR_NAME finished"
