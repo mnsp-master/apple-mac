@@ -94,7 +94,8 @@ fi
 
 #if [ "$CNF_UPDATES" == "YES" ]; then #if enabled chack for updates
 	_mainLog "inf" "Downloading GITHUB checksum..."
-	[ -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" ] && rm -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" #force delete if exists
+	rm -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" #force delete checksum
+	#[ -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" ] && rm -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" #force delete if exists
 	curl --url $CNF_GITSHA --output "$CNF_SETUP/.scripts/mnsp-login-common.checksum" > /dev/null
 	_mainLog "inf" "Comparing GITHUB/Local checksums for login script..."
 	shasum -a 256 -c "$CNF_SETUP/.scripts/mnsp-login-common.checksum" -q #compare checksums
