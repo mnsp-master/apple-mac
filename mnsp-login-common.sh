@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.7" #script version used for update checking
+CNF_VER="0.9.8" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -150,7 +150,7 @@ if [ "$CNF_SLINK" == "YES" ]; then #set desktop symlinks
 	fi
 fi
 
-if [ "$CNF_FIXES" == "YES"]; then #a set of macos 'fixes'
+if [ "$CNF_FIXES" == "YES"]; then #a set of macos 'fixes'é
 	_mainLog "inf" "Disabling shared drives in finder"
 	cp "/Writhlington/.resources/com.apple.LSSharedFileList.NetworkBrowser.sfl2" "/Users/$VAR_USERNAME/Library/Application Support/com.apple.sharedfilelist/" #disable shared drives in finder
 	chmod 644 "/Users/$VAR_USERNAME/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.NetworkBrowser.sfl2"
