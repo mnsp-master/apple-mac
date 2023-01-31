@@ -191,14 +191,44 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 	_mainLog "inf" "Logging in User Role: Student"
 		#use dscl to get intake year...
 		#VAR_DN1=$(dscl "/Active Directory/BEECHENCLIFF/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F"OU=Students" {'print $1'} ) #split at "OU=Students"
-		VAR_DN1=$(dscl "/Active Directory/$CNF_ADNETBIOSNAME/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F"OU=Students" {'print $1'} ) #split at "OU=Students"
-		VAR_DN2=$(echo $VAR_DN1 | awk -F"," '{print $(NF-1)}') #split using commas, select penultimate
-		INTYR=$(echo $VAR_DN2 | awk -F"OU=" '{print $2}') #split at OU=, select second element.
-			_mainLog "inf" "Creating My Media Work symlink"
-			_mainLog "inf" "Symlink LDAP distinguished Name part 1: $VAR_DN1"
-			_mainLog "inf" "Symlink LDAP distinguished Name part 2: $VAR_DN2"
+		
+		#create DN var
+		DN=$(dscl "/Active Directory/WRITHLINGTON/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F": " {'print $2'})
+
+		#convert DN into array
+		#array=(`echo $DN | sed 's/,/\n/g'`)
+		array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
+
+
+		#iterate array element 2
+		#echo ${array[2]}
+
+		#iterate each element in array
+		for element in "${array[@]}"
+		do
+		#echo $element
+		#find array element containing numerical value, and set INTYR var accordingly
+			case $element in
+				''|*[!0-9]*) ;;
+				*) INTYR=$element ;;
+			esac
+		done
+
+		#determind intake year var
 			_mainLog "inf" "Symlink Intake year: $INTYR"
-			_mainLog "inf" "Symlink content: /Volumes/MacData01/$INTYR/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work"
+		#echo $INTYR
+
+
+		################
+		#VAR_DN1=$(dscl "/Active Directory/$CNF_ADNETBIOSNAME/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F"OU=Students" {'print $1'} ) #split at "OU=Students"
+		#VAR_DN2=$(echo $VAR_DN1 | awk -F"," '{print $(NF-1)}') #split using commas, select penultimate
+		#INTYR=$(echo $VAR_DN2 | awk -F"OU=" '{print $2}') #split at OU=, select second element.
+		#	_mainLog "inf" "Creating My Media Work symlink"
+		#	_mainLog "inf" "Symlink LDAP distinguished Name part 1: $VAR_DN1"
+		#	_mainLog "inf" "Symlink LDAP distinguished Name part 2: $VAR_DN2"
+		#	_mainLog "inf" "Symlink Intake year: $INTYR"
+		#	_mainLog "inf" "Symlink content: /Volumes/MacData01/$INTYR/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work"
+		################	
 		#create user's dektop symlink
 		[ -f "/Users/$VAR_USERNAME/Desktop/My Media Work" ] && rm -f "/Users/$VAR_USERNAME/Desktop/My Media Work" #force delete if exists
 		sudo -u "$VAR_USERNAME" ln -s /Volumes/$CNF_SMBSHARE01/$INTYR/$VAR_USERNAME "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink using extracted vars from DSCL/LDAP lookup
