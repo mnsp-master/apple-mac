@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.8.2" #script version used for update checking
+CNF_VER="0.9.8.3" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -98,7 +98,8 @@ fi
 	#[ -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" ] && rm -f "$CNF_SETUP/.scripts/mnsp-login-common.checksum" #force delete if exists
 	curl --url $CNF_GITSHA --output "$CNF_SETUP/.scripts/mnsp-login-common.checksum" > /dev/null
 	_mainLog "inf" "Comparing GITHUB/Local checksums for login script..."
-	shasum -a 256 -c "$CNF_SETUP/.scripts/mnsp-login-common.checksum" -q #compare checksums
+	#shasum -a 256 -c "$CNF_SETUP/.scripts/mnsp-login-common.checksum" -q #compare checksums
+	shasum -a 1 -c "$CNF_SETUP/.scripts/mnsp-login-common.checksum" -q #compare checksums
 	if [ $? -ne 0 ] ; then
 		_mainLog "inf" "Downloading latest script..."
 		curl --url $CNF_GITSRC --output "$CNF_SETUP/.scripts/mnsp-login-common.sh" > /dev/null
