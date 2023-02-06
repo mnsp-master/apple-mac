@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.0.5
+#version 0.0.0.0.6
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -22,8 +22,8 @@ $ADNETBIOSNAME = $($env:UserDomain)
 if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) { 
     $ADshortName = "WRITHLINGTON"
     $CNF_NAS = "mnsp-syno-01"
-	$StudentSiteOUpath = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
-    $StaffSiteOUpaths = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
+	$StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
+    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
     $AllstudentsADGroup = "$ADshortName\WRI Students"
     $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff")
     #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
@@ -36,8 +36,8 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $ADshortName = "BEEHENCLIFF"
     $CNF_NAS="iMacBackup"
-    $StudentSiteOUpath = ",OU=Students,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal"
-    $StaffSiteOUpaths = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal")
+    $StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal"
+    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal")
     $AllstudentsADGroup = "$ADshortName\BCL Students"
     $AllTeachingStaffADGroup = "$ADshortName\BCL Teaching Staff"
     $AllSupportStaffADGroup = "$ADshortName\BCL Non-Teach Staff"
@@ -78,7 +78,7 @@ for ($i=0; $i -lt $array.Count; $i++){
     $INTYYYY = $array[$i] #set 
     Write-Host "Processing Intake year group:$INTYYYY"
     $basepath = "$StudentSiteSharePath\$INTYYYY"
-    $searchBase = "OU=$INTYYYY$StudentSiteOUpath"
+    $searchBase = "OU=$INTYYYY$StudentSiteOU"
     
     #create users array using year group array elements - 2000, 2019 etc...
     $users=@() #empty any existing array
