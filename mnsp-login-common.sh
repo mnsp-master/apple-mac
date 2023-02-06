@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.8.9" #script version used for update checking
+CNF_VER="0.9.8.9.1" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -219,7 +219,7 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 
 		#determind intake year var
 			_mainLog "inf" "Symlink Intake year: $INTYR"
-			_mainLog "inf" "Symlink content: /Volumes/MacData01/$INTYR/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work"
+			_mainLog "inf" "Symlink content: /Volumes/MacData01/$INTYR/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/$VAR_MYSYMLINK"
 		#echo $INTYR
 
 
@@ -234,8 +234,8 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		#	_mainLog "inf" "Symlink content: /Volumes/MacData01/$INTYR/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work"
 		################	
 		#create user's dektop symlink
-		[ -f "/Users/$VAR_USERNAME/Desktop/My Media Work" ] && rm -f "/Users/$VAR_USERNAME/Desktop/My Media Work" #force delete if exists
-		sudo -u "$VAR_USERNAME" ln -s /Volumes/$CNF_SMBSHARE01/$INTYR/$VAR_USERNAME "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink using extracted vars from DSCL/LDAP lookup
+		[ -f "/Users/$VAR_USERNAME/Desktop/My Media Work" ] && rm -f "/Users/$VAR_USERNAME/Desktop/$VAR_MYSYMLINK" #force delete if exists
+		sudo -u "$VAR_USERNAME" ln -s /Volumes/$CNF_SMBSHARE01/$INTYR/$VAR_USERNAME "/Users/$VAR_USERNAME/Desktop/$VAR_MYSYMLINK" #create symlink using extracted vars from DSCL/LDAP lookup
 elif [[ "${VAR_ROLE}" =~ "Staff" ]] ;then
 	_mainLog "inf" "Logging in User Role: Staff"
 		###[ -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" #force delete if exists
