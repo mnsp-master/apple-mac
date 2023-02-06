@@ -270,6 +270,8 @@ elif [[ "${VAR_ROLE}" =~ "Staff" ]] ;then
 		VAR_STAFFROOT="AllStaff"
 		_mainLog "inf" "Symlink content: /Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work" 
 
+		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME" "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink
+
 
 fi
 
