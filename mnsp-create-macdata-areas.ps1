@@ -1,13 +1,13 @@
 ﻿clear-host
 
-#version 0.0.0.0.2
+#version 0.0.0.0.3
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
 }
 
 #$dryrun = "-whatif" #toggle between "-whatif" ""
-$sleep = "30" #default sleep value (seconds)
+$sleep = "0.5" #default sleep value (seconds)
 $CID="C00681" #change ID - update as required
 $root = "D:" # base drive letter for data/logging folders - update as required
 
