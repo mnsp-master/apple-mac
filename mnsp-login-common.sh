@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.8.9.6" #script version used for update checking
+CNF_VER="0.9.8.9.7" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -103,7 +103,7 @@ fi
 		if [ $? -ne 0 ] ; then #if checksums do not match
 		_mainLog "inf" "Downloading latest script..."
 		#curl --url $CNF_GITSRC --output "$CNF_SETUP/.scripts/mnsp-login-common.sh" > /dev/null
-		curl -H 'Cache-Control: no-cache, no-store' --url $CNF_GITSRC --output "$CNF_SETUP/.scripts/mnsp-login-common.sh" > /dev/null
+		curl -H 'Cache-Control: no-cache' --url $CNF_GITSRC --output "$CNF_SETUP/.scripts/mnsp-login-common.sh" > /dev/null
 		RES=$?
 		if [ "$RES" != "0"] ; then
 		_mainLog "wrn" "Failed to successfully download latest script from github, exit code: $RES"
