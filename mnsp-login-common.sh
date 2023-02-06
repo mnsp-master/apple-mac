@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.8.9.5" #script version used for update checking
+CNF_VER="0.9.8.9.6" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
