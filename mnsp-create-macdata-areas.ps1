@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.0.4
+#version 0.0.0.0.5
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -30,7 +30,7 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     #$AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
     #year groups to process array
         #$array = @("2000","2019","2018","2017","2016","2015","2014","2013") #update as required 
-        $array = @("2000") #limited OU(s) for initial development testing.
+        $array = @("2000","2022") #limited OU(s) for initial development testing.
 
 }
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
