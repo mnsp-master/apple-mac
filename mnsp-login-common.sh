@@ -2,7 +2,7 @@
 # *********************************************************************
 
 # Script Configuration
-CNF_VER="0.9.8.8" #script version used for update checking
+CNF_VER="0.9.8.9" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -18,11 +18,13 @@ CNF_SETUP="/private/mnsp" #local location for all scripts and assets
 CNF_SWTAR="11.5.1" #macos target version
 CNF_LOGNAME="login" #name for this scripts log file
 
-#agreed MAT common smbshare name(s)
+#agreed MAT common smbshare name(s) and other folder info
 CNF_SMBSHARE01="MacData01" #students data
 CNF_SMBSHARE02="MacData02" #staff data
 CNF_SMBSHARE03="MacData03" #Common Shared area
 CNF_MACSHARED_NAME="Mac-Shared" #shared area folder name
+VAR_STAFFROOT="AllStaff" #root folder for containg all staff personal areas
+VAR_MYSYMLINK="My Mac Work" #agreed name for my Mac work, personal area.
 
 # Script Variables
 VAR_NAME=$(basename $0) #script name
@@ -236,7 +238,9 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		sudo -u "$VAR_USERNAME" ln -s /Volumes/$CNF_SMBSHARE01/$INTYR/$VAR_USERNAME "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink using extracted vars from DSCL/LDAP lookup
 elif [[ "${VAR_ROLE}" =~ "Staff" ]] ;then
 	_mainLog "inf" "Logging in User Role: Staff"
-		[ -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" #force delete if exists
+		###[ -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" ] && rm -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" #force delete if exists
+		
+		rm -f "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" #force delete existing symlink
 		sudo -u "$VAR_USERNAME" ln -s /Volumes/$CNF_SMBSHARE01 "/Users/$VAR_USERNAME/Desktop/Mac Student Areas" #create symlink using extracted vars from DSCL/LDAP lookup
 
 		#mount NAS drive 02
@@ -267,10 +271,10 @@ elif [[ "${VAR_ROLE}" =~ "Staff" ]] ;then
 
 		####################### move all staff to single directory #######################
 
-		VAR_STAFFROOT="AllStaff"
-		_mainLog "inf" "Symlink content: /Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/My Media Work" 
+		
+		_mainLog "inf" "Symlink content: /Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME /Users/$VAR_USERNAME/Desktop/$VAR_MYSYMLINK" 
 
-		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME" "/Users/$VAR_USERNAME/Desktop/My Media Work" #create symlink
+		sudo -u "$VAR_USERNAME" ln -s "/Volumes/$CNF_SMBSHARE02/$VAR_STAFFROOT/$VAR_USERNAME" "/Users/$VAR_USERNAME/Desktop/$VAR_MYSYMLINK" #create users personal data symlink
 
 
 fi
