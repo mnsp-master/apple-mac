@@ -21,12 +21,13 @@ $ADNETBIOSNAME = $($env:UserDomain)
 
 if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) { 
     $ADshortName = "WRITHLINGTON"
-    $CNF_NAS="mnsp-syno-01"
+    $CNF_NAS = "mnsp-syno-01"
 	$StudentSiteOUpath = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
     $StaffSiteOUpaths = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
     $AllstudentsADGroup = "$ADshortName\WRI Students"
-    $AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
-    $AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
+    $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff")
+    #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
+    #$AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
     #year groups to process array
         #$array = @("2000","2019","2018","2017","2016","2015","2014","2013") #update as required 
         $array = @("2000") #limited OU(s) for initial development testing.
@@ -117,8 +118,11 @@ if (!(Test-Path "$fullPath"))
     Invoke-expression "icacls.exe '$fullPath' /grant '$($user.userPrincipalName):$icaclsperms02'"
     
     #grant staff perms...
-    Invoke-expression "icacls.exe '$fullPath' /grant '$($AllTeachingStaffADGroup):$icaclsperms03'"
-    Invoke-expression "icacls.exe '$fullPath' /grant '$($AllSupportStaffADGroup):$icaclsperms03'"
+    foreach ($AllStaffADGroup in $AllStaffADGroups) {
+        Invoke-expression "icacls.exe '$fullPath' /grant '$($AllStaffADGroup):$icaclsperms03'"
+    }
+    #Invoke-expression "icacls.exe '$fullPath' /grant '$($AllTeachingStaffADGroup):$icaclsperms03'"
+    #Invoke-expression "icacls.exe '$fullPath' /grant '$($AllSupportStaffADGroup):$icaclsperms03'"
     Start-sleep $sleep #comment after initial run, once happy script is ready for full unuattended runs
     } else {
     Write-host "Already exists nothing to do..."
