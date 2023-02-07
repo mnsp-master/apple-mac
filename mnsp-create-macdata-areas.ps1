@@ -1,15 +1,14 @@
 ﻿clear-host
 
-#version 0.0.0.0.9
+#version 0.0.0.1.0
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
 }
 
-#$dryrun = "-whatif" #toggle between "-whatif" ""
 $sleep = "0.5" #default sleep value (seconds)
-$CID="C00681" #change ID - update as required
-$root = "D:" # base drive letter for data/logging folders - update as required
+$CID = "PID00108" #change/project ID
+$root = "D:" # base drive letter for data/logging folders
 
 #$GamDir="$root\AppData\GAMXTD3\app" #GAM directory
 $DataDir="$root\AppData\MNSP\$CID\Data" #Data dir
