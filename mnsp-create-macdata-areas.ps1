@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.0
+#version 0.0.0.1.1
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -120,7 +120,7 @@ if (!(Test-Path "$fullPath"))
     
 
     Write-Host "Setting NTFS Permissions..."
-    #grant student permissions...
+    #grant student personal permissions...
     Invoke-expression "icacls.exe '$fullPath' /grant '$($user.userPrincipalName):$icaclsperms02'"
     
     #grant staff perms...
@@ -131,12 +131,57 @@ if (!(Test-Path "$fullPath"))
     #Invoke-expression "icacls.exe '$fullPath' /grant '$($AllSupportStaffADGroup):$icaclsperms03'"
     Start-sleep $sleep #comment after initial run, once happy script is ready for full unuattended runs
     } else {
-    Write-host "Already exists nothing to do..."
+    Write-host "$fullpath Already exists nothing to do..."
     }
     dashedline
     #sleep 5
 }
 
+}
+
+Write-Host "Processing staff..."
+$basepath = "$StaffSiteSharePath\AllStaff"
+
+Write-Host "Checking for/Creating base path: $basepath"
+if (!(Test-Path '$basepath'))
+    {
+    Write-Host "new-item -ItemType Directory -Path $basepath -Force"
+
+    #grant traverse rights...
+    foreach ($AllStaffADGroup in $AllStaffADGroups) {
+        Invoke-expression "icacls.exe '$basepath' /grant '$($AllStaffADGroup):$icaclsperms01'"
+    } else {
+        Write-Host "$basepath already exists..."
+    }
+}
+
+dashedline
+
+foreach ( $staffOU in $StaffSiteOUs) {
+$users=@() #empty any existing array
+$users = Get-aduser  -filter * -SearchBase $StaffSiteOU -Properties sAMAccountName,homeDirectory,userPrincipalName,memberof | Select-Object sAMAccountName,homeDirectory,userPrincipalName
+Write-host "Number of staff to check/process:" $users.count
+
+    foreach ($user in $users) {
+    dashedline
+    Write-host "Processing user: $($user.sAMAccountname)"
+    Write-host "UPN: $($user.userPrincipalName)"
+    $fullPath = "$basepath\$($user.sAMAccountName)"
+
+    Write-Host "Checking for full path: '$fullpath'"
+    if (!(Test-Path "$fullPath"))
+        {
+        Write-Host "Creating directory for student..."
+        new-item -ItemType Directory -Path "$fullpath" -Force
+        
+
+        Write-Host "Setting NTFS Permissions..."
+        #grant staff personal permissions...
+        Write-Host "Invoke-expression "icacls.exe '$fullPath' /grant '$($user.userPrincipalName):$icaclsperms02'""
+        } else {
+            Write-host "$fullpath Already exists nothing to do..."
+        }
+    }
 }
 
 <#
