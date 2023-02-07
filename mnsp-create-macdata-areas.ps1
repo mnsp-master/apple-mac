@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.1
+#version 0.0.0.1.2
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -159,7 +159,7 @@ dashedline
 
 foreach ( $staffOU in $StaffSiteOUs) {
 $users=@() #empty any existing array
-$users = Get-aduser  -filter * -SearchBase $StaffSiteOU -Properties sAMAccountName,homeDirectory,userPrincipalName,memberof | Select-Object sAMAccountName,homeDirectory,userPrincipalName
+$users = Get-aduser  -filter * -SearchBase $StaffOU -Properties sAMAccountName,homeDirectory,userPrincipalName,memberof | Select-Object sAMAccountName,homeDirectory,userPrincipalName
 Write-host "Number of staff to check/process:" $users.count
 
     foreach ($user in $users) {
