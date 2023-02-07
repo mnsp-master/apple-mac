@@ -16,7 +16,7 @@ $DataDir="$root\AppData\MNSP\$CID\Data" #Data dir
 $LogDir="$root\AppData\MNSP\$CID\Logs" #Logs dir
 $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
 
-#Determine location information
+#Determine location information from AD domain of executing user...
 $ADNETBIOSNAME = $($env:UserDomain)
 
 if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) { 
@@ -33,6 +33,7 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
         $StudentOUs = @("2000","2022") #limited OU(s) for initial development testing.
 
 }
+
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $ADshortName = "BEEHENCLIFF"
     $CNF_NAS="iMacBackup"
@@ -42,10 +43,16 @@ elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $AllTeachingStaffADGroup = "$ADshortName\BCL Teaching Staff"
     $AllSupportStaffADGroup = "$ADshortName\BCL Non-Teach Staff"
 }
+
 elseif ( $ADNETBIOSNAME -eq "NORTONHILL" ) {
 
 }
+
 elseif ( $ADNETBIOSNAME -eq "HAYESFIELD" ) {
+
+}
+
+elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) {
 
 }
 
