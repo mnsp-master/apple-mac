@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.4
+#version 0.0.0.1.5
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -22,8 +22,8 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     $ADshortName = "WRITHLINGTON"
     $CNF_NAS = "mnsp-syno-01"
 	$StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
-    #$StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
-    $StaffSiteOUs = @("OU=men,OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal") #one OU testing purposes
+    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
+    #$StaffSiteOUs = @("OU=men,OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal") #one OU testing purposes
     $AllstudentsADGroup = "$ADshortName\WRI Students"
     $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff")
     #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
