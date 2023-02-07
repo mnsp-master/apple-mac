@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.0.7
+#version 0.0.0.0.8
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -29,8 +29,8 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
     #$AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
     #year groups to process array
-        #$array = @("2000","2019","2018","2017","2016","2015","2014","2013") #update as required 
-        $array = @("2000","2022") #limited OU(s) for initial development testing.
+        #$StudentOUs = @("2000","2019","2018","2017","2016","2015","2014","2013") #update as required 
+        $StudentOUs = @("2000","2022") #limited OU(s) for initial development testing.
 
 }
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
@@ -74,8 +74,8 @@ $icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support modify right (student areas)
 Write-Host "Processing Students..."
 
 
-for ($i=0; $i -lt $array.Count; $i++){
-    $INTYYYY = $array[$i] #set 
+for ($i=0; $i -lt $StudentOUs.Count; $i++){
+    $INTYYYY = $StudentOUs[$i] #set 
     Write-Host "Processing Intake year group:$INTYYYY"
     $basepath = "$StudentSiteSharePath\$INTYYYY"
     $searchBase = "OU=$INTYYYY$StudentSiteOU"
