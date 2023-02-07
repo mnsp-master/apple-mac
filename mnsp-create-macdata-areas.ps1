@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.5
+#version 0.0.0.1.6
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -13,7 +13,7 @@ $root = "D:" # base drive letter for data/logging folders
 #$GamDir="$root\AppData\GAMXTD3\app" #GAM directory
 $DataDir="$root\AppData\MNSP\$CID\Data" #Data dir
 $LogDir="$root\AppData\MNSP\$CID\Logs" #Logs dir
-$transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log"
+$transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log" #date stamped at runtime transcript log
 
 #Determine location information from AD domain of executing user...
 $ADNETBIOSNAME = $($env:UserDomain)
@@ -22,15 +22,13 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     $ADshortName = "WRITHLINGTON"
     $CNF_NAS = "mnsp-syno-01"
 	$StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
+    $AllstudentsADGroup = "$ADshortName\WRI Students" #group containing all students
     $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
-    #$StaffSiteOUs = @("OU=men,OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal") #one OU testing purposes
-    $AllstudentsADGroup = "$ADshortName\WRI Students"
-    $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff")
-    #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
-    #$AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
+    $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff") #any staff groups to include
+
     #year groups to process array
-        #$StudentOUs = @("2000","2019","2018","2017","2016","2015","2014","2013") #update as required 
-        $StudentOUs = @("2000","2022") #limited OU(s) for initial development testing.
+        #$StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
+        $StudentOUs = @("2000","2021","2022") #limited OU(s) for initial development testing.
 
 }
 
@@ -39,9 +37,9 @@ elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $CNF_NAS="iMacBackup"
     $StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal"
     $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal")
-    $AllstudentsADGroup = "$ADshortName\BCL Students"
-    $AllTeachingStaffADGroup = "$ADshortName\BCL Teaching Staff"
-    $AllSupportStaffADGroup = "$ADshortName\BCL Non-Teach Staff"
+    $AllstudentsADGroup = "$ADshortName\BCL Students" #group containing all students
+    $AllStaffADGroups = @("$ADshortName\BCL Teaching Staff","$ADshortName\BCL Non-Teach Staff") #any staff groups to include
+    $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
 }
 
 elseif ( $ADNETBIOSNAME -eq "NORTONHILL" ) {
@@ -56,10 +54,11 @@ elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) {
 
 }
 
+#commonly agreed share names, prefixed by determined at runtime host(s)
 $StudentSiteSharePath = "\\$CNF_NAS\MacData01"
 $StaffSiteSharePath = "\\$CNF_NAS\MacData02"
 
-#create required logging/working directory(s) paths if not exist...
+#create required script logging/working directory(s) paths if not exist...
 If(!(test-path -PathType container $DataDir))
 {
       New-Item -ItemType Directory -Path $DataDir
@@ -74,12 +73,11 @@ If(!(test-path -PathType container $LogDir))
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 
 $fullPath = "$basepath\$SAM" #students home drive
-$icaclsperms01 = "(NP)(RX)" #common traverse right
-$icaclsperms02 = "(OI)(CI)(RX,W,WDAC,WO,DC)" #common modify right - home directories for owner
-$icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support modify right (student areas)
+$icaclsperms01 = "(NP)(RX)" #common NFFS traverse right
+$icaclsperms02 = "(OI)(CI)(RX,W,WDAC,WO,DC)" #common NTFS modify right - home directories for owner
+$icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support NTFS modify right (browsing/editing student areas)
 
 Write-Host "Processing Students..."
-
 
 for ($i=0; $i -lt $StudentOUs.Count; $i++){
     $INTYYYY = $StudentOUs[$i] #set 
@@ -128,19 +126,19 @@ if (!(Test-Path "$fullPath"))
     foreach ($AllStaffADGroup in $AllStaffADGroups) {
         Invoke-expression "icacls.exe '$fullPath' /grant '$($AllStaffADGroup):$icaclsperms03'"
     }
-    #Invoke-expression "icacls.exe '$fullPath' /grant '$($AllTeachingStaffADGroup):$icaclsperms03'"
-    #Invoke-expression "icacls.exe '$fullPath' /grant '$($AllSupportStaffADGroup):$icaclsperms03'"
-    Start-sleep $sleep #comment after initial run, once happy script is ready for full unuattended runs
+    
+    Start-sleep $sleep
     } else {
     Write-host "$fullpath Already exists nothing to do..."
     }
     dashedline
-    #sleep 5
+    
 }
 
 }
 
 Write-Host "Processing staff..."
+Start-Sleep 5
 $basepath = "$StaffSiteSharePath\AllStaff"
 
 Write-Host "Checking for/Creating base path: $basepath"
@@ -183,6 +181,18 @@ Write-host "Number of staff to check/process: in OU: $staffOU" $users.count
         }
     }
 }
+
+
+
+#Delete any transaction logs older than 30 days
+Get-ChildItem "$LogDir\*_transcript.log" -Recurse -File | Where-Object CreationTime -lt  (Get-Date).AddDays(-30) | Remove-Item -verbose
+dashedline
+Stop-Transcript
+
+#just in case retained snips...
+
+    #$AllTeachingStaffADGroup = "$ADshortName\WRI Teaching Staff"
+    #$AllSupportStaffADGroup = "$ADshortName\WRI Non-Teach Staff"
 
 <#
 Write-Host "Processing staff..."
@@ -244,9 +254,3 @@ if (!(Test-Path '$basepath'))
 
     }
 #>
-
-#Delete any transaction logs older than 30 days
-Get-ChildItem "$LogDir\*_transcript.log" -Recurse -File | Where-Object CreationTime -lt  (Get-Date).AddDays(-30) | Remove-Item -verbose
-dashedline
-Stop-Transcript
-
