@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.3
+#version 0.0.0.1.4
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -146,22 +146,21 @@ $basepath = "$StaffSiteSharePath\AllStaff"
 Write-Host "Checking for/Creating base path: $basepath"
 if (!(Test-Path '$basepath'))
     {
+    Write-Host "Creating Allstaff root folder: $basepath..."
     new-item -ItemType Directory -Path $basepath -Force
 
     #grant traverse rights...
     foreach ($AllStaffADGroup in $AllStaffADGroups) {
         Invoke-expression "icacls.exe '$basepath' /grant '$($AllStaffADGroup):$icaclsperms01'"
-    } else {
-        Write-Host "$basepath already exists..."
+        } 
     }
-}
 
 dashedline
 
 foreach ( $staffOU in $StaffSiteOUs) {
 $users=@() #empty any existing array
 $users = Get-aduser  -filter * -SearchBase $StaffOU -Properties sAMAccountName,homeDirectory,userPrincipalName,memberof | Select-Object sAMAccountName,homeDirectory,userPrincipalName
-Write-host "Number of staff to check/process:" $users.count
+Write-host "Number of staff to check/process: in OU: $staffOU" $users.count
 
     foreach ($user in $users) {
     dashedline
