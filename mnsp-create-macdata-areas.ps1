@@ -27,8 +27,8 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff") #any staff groups to include
 
     #year groups to process array
-        #$StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
-        $StudentOUs = @("2000","2021","2022") #limited OU(s) for initial development testing.
+        $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
+        #$StudentOUs = @("2000","2021","2022") #limited OU(s) for initial development testing.
 
 }
 
@@ -42,16 +42,35 @@ elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
 }
 
-elseif ( $ADNETBIOSNAME -eq "NORTONHILL" ) {
+elseif ( $ADNETBIOSNAME -eq "NORTONHILL" ) { #Doman name TBC
+    $ADshortName = "ChangeME"
+    $CNF_NAS="ChangeME"
+    $StudentSiteOU = ",ChangeME"
+    $StaffSiteOUs = @("OU=ChangeME","OU=ChangeME")
+    $AllstudentsADGroup = "$ADshortName\ChangeME" #group containing all students
+    $AllStaffADGroups = @("$ADshortName\ChangeME","$ADshortName\ChangeME") #any staff groups to include
+    $StudentOUs = @("ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME")
 
 }
 
-elseif ( $ADNETBIOSNAME -eq "HAYESFIELD" ) {
-
+elseif ( $ADNETBIOSNAME -eq "HAYESFIELD" ) { #Doman name TBC
+    $ADshortName = "ChangeME"
+    $CNF_NAS="ChangeME"
+    $StudentSiteOU = ",ChangeME"
+    $StaffSiteOUs = @("OU=ChangeME","OU=ChangeME")
+    $AllstudentsADGroup = "$ADshortName\ChangeME" #group containing all students
+    $AllStaffADGroups = @("$ADshortName\ChangeME","$ADshortName\ChangeME") #any staff groups to include
+    $StudentOUs = @("ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME")
 }
 
-elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) {
-
+elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) { #Doman name TBC
+    $ADshortName = "ChangeME"
+    $CNF_NAS="ChangeME"
+    $StudentSiteOU = ",ChangeME"
+    $StaffSiteOUs = @("OU=ChangeME","OU=ChangeME")
+    $AllstudentsADGroup = "$ADshortName\ChangeME" #group containing all students
+    $AllStaffADGroups = @("$ADshortName\ChangeME","$ADshortName\ChangeME") #any staff groups to include
+    $StudentOUs = @("ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME")
 }
 
 #commonly agreed share names, prefixed by determined at runtime host(s)
@@ -73,7 +92,7 @@ If(!(test-path -PathType container $LogDir))
 Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 
 $fullPath = "$basepath\$SAM" #students home drive
-$icaclsperms01 = "(NP)(RX)" #common NFFS traverse right
+$icaclsperms01 = "(NP)(RX)" #common NTFS traverse right
 $icaclsperms02 = "(OI)(CI)(RX,W,WDAC,WO,DC)" #common NTFS modify right - home directories for owner
 $icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support NTFS modify right (browsing/editing student areas)
 
