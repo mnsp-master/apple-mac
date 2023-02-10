@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.6
+#version 0.0.0.1.7
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -19,16 +19,16 @@ $transcriptlog = "$LogDir\$(Get-date -Format yyyyMMdd-HHmmss)_transcript.log" #d
 $ADNETBIOSNAME = $($env:UserDomain)
 
 if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) { 
-    $ADshortName = "WRITHLINGTON"
-    $CNF_NAS = "mnsp-syno-01"
-	$StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal"
+    $ADshortName = "WRITHLINGTON" #
+    $CNF_NAS = "mnsp-syno-01" #NAS hostname
+	$StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=writhlington,DC=internal" #base/parent OU for all students
     $AllstudentsADGroup = "$ADshortName\WRI Students" #group containing all students
-    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal")
+    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=writhlington,DC=internal") #staff OUs to include
     $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff") #any staff groups to include
 
     #year groups to process array
         $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
-        #$StudentOUs = @("2000","2021","2022") #limited OU(s) for initial development testing.
+        #$StudentOUs = @("2022") #limited OU(s) for initial development testing.
 
 }
 
@@ -94,7 +94,7 @@ Start-Transcript -Path $transcriptlog -Force -NoClobber -Append
 $fullPath = "$basepath\$SAM" #students home drive
 $icaclsperms01 = "(NP)(RX)" #common NTFS traverse right
 $icaclsperms02 = "(OI)(CI)(RX,W,WDAC,WO,DC)" #common NTFS modify right - home directories for owner
-$icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support NTFS modify right (browsing/editing student areas)
+$icaclsperms03 = "(OI)(CI)(RX,W,DC)" #staff/support NTFS modify right (browsing/editing student personal areas)
 
 Write-Host "Processing Students..."
 
