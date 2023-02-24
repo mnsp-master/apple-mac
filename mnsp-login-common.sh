@@ -169,23 +169,22 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 
 		#convert DN into array
 		#array=(`echo $DN | sed 's/,/\n/g'`)
-		##array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
+		array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
 
-		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`) # far too many awks... yuck, excludes first element
+		#INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`) # far too many awks... yuck, excludes first element
 
-		##needs nested if else for WRI - better still suitable array int year function .... 
 		### functional regex: ^\d{4}$ - https://regex101.com
 		### https://stackoverflow.com/questions/9631335/regular-expressions-in-a-bash-case-statement
 		###iterate each element in array
-		##for element in "${array[@]}"
-		##do
+		for element in "${array[@]}"
+		do
 		##echo $element
 		#find array element containing numerical value, and set INTYR var accordingly
-		##	case $element in
-		##		''|*[!0-9]*) ;;
-		##		*) INTYR=$element ;;
-		##	esac
-		##done
+			case $element in
+				''|*[!0-9]*) ;; #find element containing ONLY numbers (intake year OU)
+				*) INTYR=$element ;;
+			esac
+		done
 
 		#determind intake year var
 			_mainLog "inf" "Symlink Intake year: $INTYR"
