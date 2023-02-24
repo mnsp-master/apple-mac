@@ -33,7 +33,7 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
 }
 
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
-    $ADshortName = "BEEHENCLIFF"
+    $ADshortName = "BEECHENCLIFF"
     $CNF_NAS="iMacBackup"
     $StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal"
     $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal")
