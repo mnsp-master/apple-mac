@@ -35,10 +35,10 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
 elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $ADshortName = "BEECHENCLIFF"
     $CNF_NAS="iMacBackup"
-    $StudentSiteOU = ",OU=Students,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal"
-    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=WRI,OU=Establishments,DC=Beechencliff,DC=internal")
-    $AllstudentsADGroup = "$ADshortName\BCL Students" #group containing all students
-    $AllStaffADGroups = @("$ADshortName\BCL Teaching Staff","$ADshortName\BCL Non-Teach Staff") #any staff groups to include
+    $StudentSiteOU = ",OU=Students,OU=BCS,OU=Establishments,DC=Beechencliff,DC=internal"
+    $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=BCS,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=BCS,OU=Establishments,DC=Beechencliff,DC=internal")
+    $AllstudentsADGroup = "$ADshortName\BCS Students" #group containing all students
+    $AllStaffADGroups = @("$ADshortName\BCS Teaching Staff","$ADshortName\BCL Non-Teach Staff") #any staff groups to include
     $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
 }
 
