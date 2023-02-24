@@ -1,6 +1,6 @@
 #!/bin/bash
 # *********************************************************************
-
+#osver at bcl 12.5
 # Script Configuration
 CNF_VER="0.9.8.9.8" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
@@ -165,7 +165,7 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		
 		#use dscl to get intake year...
 		#create DN var
-		DN=$(dscl "/Active Directory/WRITHLINGTON/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F": " {'print $2'})
+		DN=$(dscl "/Active Directory/$CNF_ADNETBIOSNAME/All Domains" -read "Users/$VAR_USERNAME" distinguishedName | awk -F": " {'print $2'})
 
 		#convert DN into array
 		#array=(`echo $DN | sed 's/,/\n/g'`)
