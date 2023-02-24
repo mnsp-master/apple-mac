@@ -171,8 +171,9 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		#array=(`echo $DN | sed 's/,/\n/g'`)
 		##array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
 
-		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`) # far too many awks... yuck
+		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`) # far too many awks... yuck, excludes first element
 
+		##needs nested if else for WRI - better still suitable array int year function .... 
 		###iterate each element in array
 		##for element in "${array[@]}"
 		##do
