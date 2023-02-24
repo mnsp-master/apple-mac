@@ -169,9 +169,9 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 
 		#convert DN into array
 		#array=(`echo $DN | sed 's/,/\n/g'`)
-		array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
+		##array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
 
-		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`)
+		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`) # far too many awks... yuck
 
 		###iterate each element in array
 		##for element in "${array[@]}"
