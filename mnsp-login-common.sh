@@ -2,7 +2,7 @@
 # *********************************************************************
 #osver at bcl 12.5
 # Script Configuration
-CNF_VER="0.9.8.9.9" #script version used for update checking
+CNF_VER="0.9.8.9.9.1" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -171,16 +171,18 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		#array=(`echo $DN | sed 's/,/\n/g'`)
 		array=(`echo $DN | sed 's/,/\n/g' | awk -F"=" {'print $2'}`) #removes OU= DC= etc
 
-		#iterate each element in array
-		for element in "${array[@]}"
-		do
-		echo $element
+		INTYR=(`echo $DN | awk -F"," '{ $1=""; print}' | awk {'print $1'} | awk -F"=" {'print $2'}`)
+
+		###iterate each element in array
+		##for element in "${array[@]}"
+		##do
+		##echo $element
 		#find array element containing numerical value, and set INTYR var accordingly
-			case $element in
-				''|*[!0-9]*) ;;
-				*) INTYR=$element ;;
-			esac
-		done
+		##	case $element in
+		##		''|*[!0-9]*) ;;
+		##		*) INTYR=$element ;;
+		##	esac
+		##done
 
 		#determind intake year var
 			_mainLog "inf" "Symlink Intake year: $INTYR"
