@@ -64,13 +64,13 @@ elseif ( $ADNETBIOSNAME -eq "HAYESFIELD" ) { #Doman name TBC
 }
 
 elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) { #Doman name TBC
-    $ADshortName = "ChangeME"
-    $CNF_NAS="ChangeME"
-    $StudentSiteOU = ",ChangeME"
-    $StaffSiteOUs = @("OU=ChangeME","OU=ChangeME")
+    $ADshortName = "BUCKLERSMEAD"
+    $CNF_NAS="BMD-MUS-NAS"
+    $StudentSiteOU = ",OU=Students,OU=Users,OU=BMA,DC=Bucklersmead,DC=internal"
+    $StaffSiteOUs = @("OU=Staff,OU=Users,OU=BMA,DC=Bucklersmead,DC=internal")
     $AllstudentsADGroup = "$ADshortName\ChangeME" #group containing all students
     $AllStaffADGroups = @("$ADshortName\ChangeME","$ADshortName\ChangeME") #any staff groups to include
-    $StudentOUs = @("ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME","ChangeME")
+    $StudentOUs = @("2018","2019","2020","2021","2022")
 }
 
 #commonly agreed share names, prefixed by determined at runtime host(s)
