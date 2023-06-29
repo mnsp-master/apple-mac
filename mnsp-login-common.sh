@@ -2,7 +2,7 @@
 # *********************************************************************
 #osver at bcl 12.5
 # Script Configuration
-CNF_VER="0.9.8.9.9.7" #script version used for update checking
+CNF_VER="0.9.8.9.9.8" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -80,6 +80,10 @@ elif [ $VAR_LOCALBCAST == "10.4.11.255" ]; then
 	CNF_NAS="UNKNOWN"
 	CNF_ADNETBIOSNAME="NORTONHILL"
 elif [ $VAR_LOCALBCAST == "10.46.72.255" ]; then
+	_mainLog "inf" "Location: BucklersMead"
+	CNF_NAS="BMD-MUS-NAS"
+	CNF_ADNETBIOSNAME="BUCKLERSMEAD"
+elif [ $VAR_LOCALBCAST == "10.46.75.255" ]; then
 	_mainLog "inf" "Location: BucklersMead"
 	CNF_NAS="BMD-MUS-NAS"
 	CNF_ADNETBIOSNAME="BUCKLERSMEAD"
@@ -182,7 +186,7 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		###iterate each element in array
 		for element in "${array[@]}"
 		do
-		echo $element
+		#echo $element
 		#find array element containing numerical value, and set INTYR var accordingly
 			case $element in
 				''|*[!0-9]*) ;; #find element containing ONLY numbers (intake year OU)
