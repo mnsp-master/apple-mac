@@ -2,7 +2,7 @@
 # *********************************************************************
 #osver at bcl 12.5
 # Script Configuration
-CNF_VER="0.9.8.9.9.6" #script version used for update checking
+CNF_VER="0.9.8.9.9.7" #script version used for update checking
 CNF_ENABLED="YES" #run script yes or no
 CNF_LOGGING="YES" #log script output or not
 CNF_UPDATES="YES" #check mac server for updates and download them
@@ -182,7 +182,7 @@ if [[ "${VAR_ROLE}" =~ "Students" ]] ;then
 		###iterate each element in array
 		for element in "${array[@]}"
 		do
-		##echo $element
+		echo $element
 		#find array element containing numerical value, and set INTYR var accordingly
 			case $element in
 				''|*[!0-9]*) ;; #find element containing ONLY numbers (intake year OU)
