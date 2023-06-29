@@ -79,6 +79,10 @@ elif [ $VAR_LOCALBCAST == "10.4.11.255" ]; then
 	_mainLog "inf" "Location: NORTONHILL"
 	CNF_NAS="UNKNOWN"
 	CNF_ADNETBIOSNAME="NORTONHILL"
+elif [ $VAR_LOCALBCAST == "10.46.72.255" ]; then
+	_mainLog "inf" "Location: BucklersMead"
+	CNF_NAS="BMD-MUS-NAS"
+	CNF_ADNETBIOSNAME="BUCKLERSMEAD"
 fi
 
 _mainLog "inf" "Local NAS NetbiosName: $CNF_NAS"
