@@ -1,6 +1,6 @@
 ﻿clear-host
 
-#version 0.0.0.1.8
+#version 0.0.0.1.9
 
 function dashedline() { #print dashed line
 Write-Host "----------------------------------------------------------------------------------------------------------"
@@ -27,7 +27,7 @@ if ( $ADNETBIOSNAME -eq "WRITHLINGTON" ) {
     $AllStaffADGroups = @("$ADshortName\WRI Teaching Staff","$ADshortName\WRI Non-Teach Staff") #any staff groups to include
 
     #year groups to process array
-        $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
+        $StudentOUs = @("2023","2022","2021","2020","2019","2018","2017","2016")
         #$StudentOUs = @("2022") #limited OU(s) for initial development testing.
 
 }
@@ -39,7 +39,7 @@ elseif ( $ADNETBIOSNAME -eq "BEECHENCLIFF" ) {
     $StaffSiteOUs = @("OU=Non-Teaching Staff,OU=BCS,OU=Establishments,DC=Beechencliff,DC=internal","OU=Teaching Staff,OU=BCS,OU=Establishments,DC=Beechencliff,DC=internal")
     $AllstudentsADGroup = "$ADshortName\BCS Students" #group containing all students
     $AllStaffADGroups = @("$ADshortName\BCS Teaching Staff","$ADshortName\BCL Non-Teach Staff") #any staff groups to include
-    $StudentOUs = @("2022","2021","2020","2019","2018","2017","2016")
+    $StudentOUs = @("2023","2022","2021","2020","2019","2018","2017","2016")
 }
 
 elseif ( $ADNETBIOSNAME -eq "NORTONHILL" ) { #Doman name TBC
@@ -70,7 +70,7 @@ elseif ( $ADNETBIOSNAME -eq "BUCKLERSMEAD" ) { #Doman name TBC
     $StaffSiteOUs = @("OU=Staff,OU=Users,OU=BMA,DC=Bucklersmead,DC=internal")
     $AllstudentsADGroup = "$ADshortName\ChangeME" #group containing all students
     $AllStaffADGroups = @("$ADshortName\ChangeME","$ADshortName\ChangeME") #any staff groups to include
-    $StudentOUs = @("2018","2019","2020","2021","2022")
+    $StudentOUs = @("2018","2019","2020","2021","2022","2023")
 }
 
 #commonly agreed share names, prefixed by determined at runtime host(s)
